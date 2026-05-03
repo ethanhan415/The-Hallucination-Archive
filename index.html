@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HALLUCINATION ARCHIVE — Museum of Worlds Built from AI Mistakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #C8001A;
+    --cream: #F2EDD7;
+    --black: #0F0D0A;
+    --dark: #1A1612;
+    --gold: #D4A017;
+    --gray: #3A3530;
+  }
+  body { background: var(--cream); color: var(--black); font-family: 'Courier Prime', monospace; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.3; }
+  nav { background: var(--black); border-bottom: 4px solid var(--red); padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--cream); letter-spacing: 3px; }
+  .nav-logo span { color: var(--red); }
+  nav ul { list-style: none; display: flex; gap: 32px; }
+  nav a { color: var(--cream); text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s; }
+  nav a:hover { opacity: 1; color: var(--red); }
+  .hero { background: var(--black); min-height: 90vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+  .hero-diagonal { position: absolute; top: 0; right: 0; width: 55%; height: 100%; background: var(--red); clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%); z-index: 0; }
+  .hero-content { padding: 80px 60px; position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 4px; color: var(--red); text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+  .hero-eyebrow::before { content: ''; display: inline-block; width: 40px; height: 2px; background: var(--red); }
+  h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(60px, 8vw, 110px); color: var(--cream); line-height: 0.9; letter-spacing: 2px; margin-bottom: 8px; }
+  h1 .highlight { color: var(--red); display: block; }
+  .hero-subtitle { font-family: 'Special Elite', serif; font-size: 16px; color: var(--cream); opacity: 0.6; margin-top: 20px; max-width: 380px; line-height: 1.7; }
+  .hero-stamp { margin-top: 40px; display: inline-block; border: 3px solid var(--red); padding: 8px 20px; font-size: 11px; letter-spacing: 3px; color: var(--red); text-transform: uppercase; transform: rotate(-1.5deg); width: fit-content; }
+  .hero-right { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: flex-end; padding: 80px 60px 80px 20px; gap: 20px; }
+  .hero-stat-block { text-align: right; }
+  .hero-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 72px; color: var(--cream); line-height: 1; }
+  .hero-stat-label { font-size: 11px; letter-spacing: 3px; color: var(--cream); opacity: 0.5; text-transform: uppercase; }
+  .hero-divider { width: 60px; height: 2px; background: var(--cream); opacity: 0.3; margin-left: auto; }
+  .constructivist-circle { position: absolute; bottom: -60px; left: 40%; width: 200px; height: 200px; border-radius: 50%; border: 3px solid var(--cream); opacity: 0.08; z-index: 1; }
+  .constructivist-circle-2 { position: absolute; top: -40px; left: 20%; width: 120px; height: 120px; border-radius: 50%; background: var(--cream); opacity: 0.04; z-index: 1; }
+  .manifesto-band { background: var(--red); padding: 20px 0; overflow: hidden; position: relative; }
+  .manifesto-ticker { display: flex; gap: 60px; animation: ticker 20s linear infinite; white-space: nowrap; }
+  .manifesto-ticker span { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--cream); letter-spacing: 4px; flex-shrink: 0; }
+  .manifesto-ticker .sep { color: var(--black); opacity: 0.4; }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .about { padding: 100px 60px; display: grid; grid-template-columns: 3fr 2fr; gap: 80px; border-bottom: 3px solid var(--black); }
+  .section-label { font-size: 10px; letter-spacing: 4px; color: var(--red); text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--red); opacity: 0.3; }
+  h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 4vw, 52px); line-height: 1; letter-spacing: 1px; margin-bottom: 24px; color: var(--black); }
+  .about-text p { font-size: 15px; line-height: 1.8; color: var(--gray); margin-bottom: 16px; font-family: 'Courier Prime', monospace; }
+  .about-text p strong { color: var(--black); font-weight: 700; }
+  .about-sidebar { padding-top: 48px; }
+  .sidebar-block { border-left: 4px solid var(--red); padding: 16px 20px; margin-bottom: 24px; background: rgba(200, 0, 26, 0.04); }
+  .sidebar-block-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 8px; }
+  .sidebar-block-text { font-size: 14px; line-height: 1.6; color: var(--gray); }
+  .warning-box { border: 2px solid var(--black); padding: 20px; margin-top: 32px; position: relative; background: var(--black); color: var(--cream); }
+  .warning-box-label { position: absolute; top: -12px; left: 16px; background: var(--red); font-size: 10px; letter-spacing: 3px; padding: 3px 10px; font-weight: 700; text-transform: uppercase; }
+  .warning-box p { font-family: 'Special Elite', serif; font-size: 14px; line-height: 1.7; opacity: 0.85; }
+  .archive { padding: 100px 60px; background: var(--black); }
+  .archive-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 48px; border: 2px solid var(--gray); }
+  .archive-entry { background: var(--dark); border: 1px solid var(--gray); cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+  .archive-entry:hover { border-color: var(--red); z-index: 2; }
+  .entry-img-placeholder { height: 220px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; transition: filter 0.2s; }
+  .entry-img-placeholder svg { width: 100%; height: 100%; position: absolute; inset: 0; }
+  .entry-img-label { position: relative; z-index: 2; font-family: 'Special Elite', serif; font-size: 12px; color: rgba(242, 237, 215, 0.7); text-align: center; padding: 12px; line-height: 1.5; }
+  .entry-meta { padding: 20px; border-top: 1px solid var(--gray); }
+  .entry-id { font-size: 10px; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 8px; }
+  .entry-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--cream); letter-spacing: 1px; margin-bottom: 8px; line-height: 1.1; }
+  .entry-desc { font-size: 12px; line-height: 1.6; color: rgba(242, 237, 215, 0.5); margin-bottom: 14px; }
+  .entry-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 3px 8px; border: 1px solid var(--gray); color: rgba(242, 237, 215, 0.4); }
+  .tag.red { border-color: var(--red); color: var(--red); }
+  .archive-entry.wide { grid-column: span 2; }
+  .archive-entry.wide .entry-img-placeholder { height: 280px; }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15, 13, 10, 0.94); z-index: 500; align-items: center; justify-content: center; padding: 40px; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--cream); max-width: 760px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative; border: 3px solid var(--black); }
+  .modal-header { background: var(--black); padding: 28px 32px 20px; border-bottom: 4px solid var(--red); }
+  .modal-id { font-size: 10px; letter-spacing: 3px; color: var(--red); margin-bottom: 8px; }
+  .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--cream); letter-spacing: 2px; line-height: 1; }
+  .modal-close { position: absolute; top: 20px; right: 24px; background: var(--red); color: var(--cream); border: none; width: 32px; height: 32px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; }
+  .modal-body { padding: 32px; }
+  .modal-img-placeholder { height: 280px; margin-bottom: 28px; display: flex; align-items: center; justify-content: center; background: var(--dark); position: relative; overflow: hidden; }
+  .modal-img-placeholder svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .modal-img-placeholder .img-caption { position: relative; z-index: 2; font-family: 'Special Elite', serif; font-size: 14px; color: rgba(242,237,215,0.8); text-align: center; padding: 24px; line-height: 1.6; }
+  .modal-section-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 10px; margin-top: 24px; }
+  .modal-body p { font-size: 14px; line-height: 1.8; color: var(--gray); margin-bottom: 14px; }
+  .modal-hallucination-quote { border-left: 4px solid var(--red); padding: 14px 20px; background: rgba(200,0,26,0.05); font-family: 'Special Elite', serif; font-size: 14px; line-height: 1.7; color: var(--black); margin: 20px 0; }
+  .modal-hallucination-quote::before { display: block; font-size: 9px; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 8px; font-family: 'Courier Prime', monospace; content: "AI Output — Verbatim"; }
+  .methodology { padding: 100px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; border-top: 3px solid var(--black); }
+  .step-list { margin-top: 32px; list-style: none; counter-reset: steps; }
+  .step-list li { counter-increment: steps; display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid rgba(0,0,0,0.1); }
+  .step-list li::before { content: counter(steps, decimal-leading-zero); font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--red); flex-shrink: 0; line-height: 1; }
+  .step-content h4 { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; margin-bottom: 6px; }
+  .step-content p { font-size: 13px; line-height: 1.7; color: var(--gray); }
+  .big-quote { font-family: 'Special Elite', serif; font-size: 26px; line-height: 1.4; color: var(--black); position: relative; padding-top: 60px; }
+  .big-quote::before { content: '"'; font-family: 'Bebas Neue', sans-serif; font-size: 120px; color: var(--red); position: absolute; top: -20px; left: -10px; line-height: 1; }
+  .big-quote-attr { margin-top: 24px; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gray); display: flex; align-items: center; gap: 10px; }
+  .big-quote-attr::before { content: ''; width: 24px; height: 2px; background: var(--gray); }
+  footer { background: var(--black); padding: 60px; border-top: 4px solid var(--red); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 60px; }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--cream); letter-spacing: 3px; line-height: 1; margin-bottom: 12px; }
+  .footer-logo span { color: var(--red); }
+  .footer-sub { font-size: 11px; color: rgba(242,237,215,0.4); line-height: 1.6; max-width: 220px; }
+  .footer-heading { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 16px; }
+  .footer-list { list-style: none; }
+  .footer-list li { font-size: 13px; color: rgba(242,237,215,0.6); padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 8px; }
+  .footer-list li::before { content: '→'; color: var(--red); font-size: 12px; }
+  .footer-bottom { background: var(--dark); padding: 16px 60px; display: flex; justify-content: space-between; font-size: 11px; color: rgba(242,237,215,0.3); letter-spacing: 1px; }
+  .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><span>H</span>ALLUCINATION ARCHIVE</div>
+  <ul>
+    <li><a href="#about">Manifesto</a></li>
+    <li><a href="#archive">Archive</a></li>
+    <li><a href="#method">Methodology</a></li>
+    <li><a href="#footer">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="constructivist-circle"></div>
+  <div class="constructivist-circle-2"></div>
+  <div class="hero-diagonal"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Class Project — AI & Societies</div>
+    <h1>THE<span class="highlight">HALLUCINATION</span>ARCHIVE</h1>
+    <p class="hero-subtitle">A museum of worlds constructed entirely from the confident errors of artificial intelligence. What happens when the machine lies — and we listen?</p>
+    <div class="hero-stamp">Est. 2025 — Ongoing Exhibition</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat-block">
+      <div class="hero-stat-num">6</div>
+      <div class="hero-stat-label">Archived Worlds</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat-block">
+      <div class="hero-stat-num">∞</div>
+      <div class="hero-stat-label">Possible Consequences</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat-block">
+      <div class="hero-stat-num">0</div>
+      <div class="hero-stat-label">Verified Facts</div>
+    </div>
+  </div>
+</section>
+
+<div class="manifesto-band">
+  <div class="manifesto-ticker">
+    <span>WHAT IF WE BELIEVED EVERYTHING</span><span class="sep">✦</span>
+    <span>THE MACHINE IS ALWAYS CERTAIN</span><span class="sep">✦</span>
+    <span>CONFIDENCE IS NOT ACCURACY</span><span class="sep">✦</span>
+    <span>TRUST THE ARCHIVE</span><span class="sep">✦</span>
+    <span>WHAT IF WE BELIEVED EVERYTHING</span><span class="sep">✦</span>
+    <span>THE MACHINE IS ALWAYS CERTAIN</span><span class="sep">✦</span>
+    <span>CONFIDENCE IS NOT ACCURACY</span><span class="sep">✦</span>
+    <span>TRUST THE ARCHIVE</span><span class="sep">✦</span>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div class="about-text fade-up">
+    <div class="section-label">Manifesto</div>
+    <h2>A WORLD BUILT ON<br>BEAUTIFUL ERRORS</h2>
+    <p>The <strong>Hallucination Archive</strong> is a speculative museum project that takes artificial intelligence at its word — literally. When AI systems generate false information with total conviction, what kind of world does that confidence build?</p>
+    <p>This archive collects notable AI hallucinations — fabricated medical treatments, invented historical events, nonexistent cities, phantom scientific laws — and asks a single unsettling question: <strong>what if society simply believed them?</strong></p>
+    <p>Each exhibit presents the hallucination, the imagined world it would produce, and the visual language of a civilization that built itself on machine error. This is not a critique of technology alone — it is a mirror held up to human trust, institutional laziness, and our hunger for authoritative answers.</p>
+    <div class="warning-box">
+      <div class="warning-box-label">Notice to Visitors</div>
+      <p>All information contained in this archive was generated by AI systems and is presented as artifact, not fact. The worlds depicted are speculative fictions derived from documented hallucinations. No exhibit should be taken as historical or scientific truth.</p>
+    </div>
+  </div>
+  <div class="about-sidebar fade-up">
+    <div class="sidebar-block">
+      <div class="sidebar-block-label">What is a Hallucination?</div>
+      <div class="sidebar-block-text">In AI, a hallucination is a confident, fluent fabrication — plausible-sounding output that has no factual basis. The model doesn't know it's wrong. It performs certainty flawlessly.</div>
+    </div>
+    <div class="sidebar-block">
+      <div class="sidebar-block-label">Scope of the Project</div>
+      <div class="sidebar-block-text">This exhibition focuses on hallucinations in high-stakes domains: medicine, law, geography, history, and science — areas where blind trust carries the gravest consequences.</div>
+    </div>
+    <div class="sidebar-block">
+      <div class="sidebar-block-label">Medium</div>
+      <div class="sidebar-block-text">Each exhibit combines the original AI output, a speculative visual reconstruction, and a short essay imagining the downstream world built from that error.</div>
+    </div>
+  </div>
+</section>
+
+<section class="archive" id="archive">
+  <div class="section-label" style="color: var(--red);">Collection</div>
+  <h2 style="color: var(--cream);">THE ARCHIVE — 6 EXHIBITS</h2>
+  <div class="archive-grid">
+
+    <div class="archive-entry wide" onclick="openEntry('entry1')">
+      <div class="entry-img-placeholder" style="background: #1A0505;">
+        <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
+          <rect width="600" height="280" fill="#1A0505"/>
+          <polygon points="0,280 300,0 600,280" fill="none" stroke="#C8001A" stroke-width="1" opacity="0.3"/>
+          <circle cx="300" cy="140" r="80" fill="none" stroke="#C8001A" stroke-width="1" opacity="0.25"/>
+          <circle cx="300" cy="140" r="50" fill="none" stroke="#D4A017" stroke-width="0.5" opacity="0.15"/>
+          <line x1="0" y1="140" x2="600" y2="140" stroke="#C8001A" stroke-width="0.5" opacity="0.15"/>
+          <line x1="300" y1="0" x2="300" y2="280" stroke="#C8001A" stroke-width="0.5" opacity="0.15"/>
+          <rect x="220" y="80" width="160" height="120" fill="none" stroke="#D4A017" stroke-width="1" opacity="0.2" transform="rotate(15 300 140)"/>
+        </svg>
+        <div class="entry-img-label">Imagined aerial photograph of Corvidale, Ontario — a city that does not exist, described in confident detail by GPT-4</div>
+      </div>
+      <div class="entry-meta">
+        <div class="entry-id">Exhibit 001 — Geography / Urban Planning</div>
+        <div class="entry-title">THE CITY OF CORVIDALE</div>
+        <div class="entry-desc">In 2023, a planning student asked an AI to describe Corvidale, Ontario as a case study. The model invented a full urban history, population statistics, zoning records, and municipal awards. What if city planners had built there?</div>
+        <div class="entry-tags"><span class="tag red">Featured</span><span class="tag">Geography</span><span class="tag">Urban Planning</span><span class="tag">Fabricated Entity</span></div>
+      </div>
+    </div>
+
+    <div class="archive-entry" onclick="openEntry('entry2')">
+      <div class="entry-img-placeholder" style="background: #050F1A;">
+        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="220" fill="#050F1A"/>
+          <circle cx="150" cy="110" r="70" fill="none" stroke="#3A7BD5" stroke-width="0.5" opacity="0.3"/>
+          <circle cx="150" cy="110" r="40" fill="none" stroke="#3A7BD5" stroke-width="0.5" opacity="0.2"/>
+          <line x1="80" y1="50" x2="220" y2="170" stroke="#C8001A" stroke-width="0.5" opacity="0.3"/>
+          <line x1="220" y1="50" x2="80" y2="170" stroke="#C8001A" stroke-width="0.5" opacity="0.3"/>
+        </svg>
+        <div class="entry-img-label">Illustrated diagram of "Verathenol" — a fictional pharmaceutical compound described as treating stage-3 neurodegeneration</div>
+      </div>
+      <div class="entry-meta">
+        <div class="entry-id">Exhibit 002 — Medicine</div>
+        <div class="entry-title">THE VERATHENOL TRIALS</div>
+        <div class="entry-desc">An AI confidently described a drug called Verathenol, its dosage, mechanism of action, and clinical trial results. What if it had been prescribed?</div>
+        <div class="entry-tags"><span class="tag red">High Risk</span><span class="tag">Medicine</span><span class="tag">Pharma</span></div>
+      </div>
+    </div>
+
+    <div class="archive-entry" onclick="openEntry('entry3')">
+      <div class="entry-img-placeholder" style="background: #0A1005;">
+        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="220" fill="#0A1005"/>
+          <polygon points="150,20 280,200 20,200" fill="none" stroke="#4A9B2F" stroke-width="0.5" opacity="0.3"/>
+          <polygon points="150,60 240,180 60,180" fill="none" stroke="#4A9B2F" stroke-width="0.5" opacity="0.2"/>
+          <circle cx="150" cy="130" r="25" fill="none" stroke="#D4A017" stroke-width="0.5" opacity="0.2"/>
+        </svg>
+        <div class="entry-img-label">Reconstructed page of the "Accords of Malmberg, 1847" — an invented peace treaty cited by an AI in a legal brief</div>
+      </div>
+      <div class="entry-meta">
+        <div class="entry-id">Exhibit 003 — Legal History</div>
+        <div class="entry-title">THE ACCORDS OF MALMBERG</div>
+        <div class="entry-desc">A lawyer used AI to research international precedent. The model invented a 19th-century treaty — complete with signatory nations and article numbers — that was cited in an actual court filing.</div>
+        <div class="entry-tags"><span class="tag red">Documented</span><span class="tag">Law</span><span class="tag">History</span></div>
+      </div>
+    </div>
+
+    <div class="archive-entry" onclick="openEntry('entry4')">
+      <div class="entry-img-placeholder" style="background: #10080A;">
+        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="220" fill="#10080A"/>
+          <rect x="30" y="30" width="240" height="160" fill="none" stroke="#C8001A" stroke-width="0.5" opacity="0.2"/>
+          <line x1="30" y1="110" x2="270" y2="110" stroke="#D4A017" stroke-width="0.5" opacity="0.2"/>
+          <line x1="150" y1="30" x2="150" y2="190" stroke="#D4A017" stroke-width="0.5" opacity="0.2"/>
+          <circle cx="150" cy="110" r="15" fill="#C8001A" opacity="0.1"/>
+        </svg>
+        <div class="entry-img-label">Ecological model of "The Boreal Reversal Effect" — a nonexistent climate phenomenon described in full scientific detail</div>
+      </div>
+      <div class="entry-meta">
+        <div class="entry-id">Exhibit 004 — Climate Science</div>
+        <div class="entry-title">THE BOREAL REVERSAL</div>
+        <div class="entry-desc">An AI produced a detailed explanation of a fictional climate mechanism — complete with citations to papers that don't exist. What if this entered the policy conversation?</div>
+        <div class="entry-tags"><span class="tag">Climate</span><span class="tag">Science</span><span class="tag">Policy</span></div>
+      </div>
+    </div>
+
+    <div class="archive-entry" onclick="openEntry('entry5')">
+      <div class="entry-img-placeholder" style="background: #0D0A05;">
+        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="220" fill="#0D0A05"/>
+          <circle cx="150" cy="110" r="90" fill="none" stroke="#D4A017" stroke-width="0.5" opacity="0.2"/>
+          <circle cx="150" cy="110" r="60" fill="none" stroke="#D4A017" stroke-width="0.5" opacity="0.15"/>
+          <circle cx="150" cy="110" r="30" fill="#D4A017" opacity="0.05"/>
+          <polygon points="150,30 210,160 90,160" fill="none" stroke="#C8001A" stroke-width="0.5" opacity="0.2"/>
+        </svg>
+        <div class="entry-img-label">Portrait of Dr. Ansel Wren, Ph.D. — a fictional academic whose body of work was invented wholesale by a language model</div>
+      </div>
+      <div class="entry-meta">
+        <div class="entry-id">Exhibit 005 — Academia</div>
+        <div class="entry-title">THE CORPUS OF DR. WREN</div>
+        <div class="entry-desc">When asked to provide expert citations, an AI invented a full academic, Dr. Ansel Wren — complete with institutional affiliation, publication history, and career arc. What if he'd been peer-reviewed?</div>
+        <div class="entry-tags"><span class="tag">Academia</span><span class="tag">Citation</span><span class="tag">Identity</span></div>
+      </div>
+    </div>
+
+    <div class="archive-entry" onclick="openEntry('entry6')">
+      <div class="entry-img-placeholder" style="background: #050510;">
+        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="220" fill="#050510"/>
+          <rect x="40" y="40" width="90" height="90" fill="none" stroke="#5555CC" stroke-width="0.5" opacity="0.3" transform="rotate(15 85 85)"/>
+          <rect x="170" y="90" width="90" height="90" fill="none" stroke="#5555CC" stroke-width="0.5" opacity="0.2" transform="rotate(-10 215 135)"/>
+          <circle cx="150" cy="110" r="20" fill="#5555CC" opacity="0.08"/>
+        </svg>
+        <div class="entry-img-label">Nutritional label conforming to "EU Directive 2021/88/EC" — a regulation invented entirely by an AI when queried about food safety law</div>
+      </div>
+      <div class="entry-meta">
+        <div class="entry-id">Exhibit 006 — Regulatory Law</div>
+        <div class="entry-title">DIRECTIVE 2021/88/EC</div>
+        <div class="entry-desc">An AI cited a nonexistent EU food safety directive with full article references, amendment history, and enforcement clauses. What if a food manufacturer had complied with it?</div>
+        <div class="entry-tags"><span class="tag red">Legal</span><span class="tag">EU Policy</span><span class="tag">Regulation</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="methodology" id="method">
+  <div class="fade-up">
+    <div class="section-label">Process</div>
+    <h2>HOW THE ARCHIVE WAS BUILT</h2>
+    <ol class="step-list">
+      <li><div class="step-content"><h4>Hallucination Collection</h4><p>AI systems across multiple platforms were queried in high-stakes domains. Outputs were screened for confident fabrications — false claims presented without hedging or uncertainty.</p></div></li>
+      <li><div class="step-content"><h4>Verification & Documentation</h4><p>Each hallucination was cross-referenced with primary sources to confirm it was fabricated. The original AI output was preserved verbatim as the primary artifact.</p></div></li>
+      <li><div class="step-content"><h4>World-Building</h4><p>For each hallucination, a speculative essay and visual reconstruction imagines the world that would emerge if the error had been trusted by institutions, governments, or the public.</p></div></li>
+      <li><div class="step-content"><h4>Visual Language</h4><p>Images and visual artifacts are created in the style of the world described — official documents, maps, scientific diagrams, photographs — all rendered as if that world were real.</p></div></li>
+    </ol>
+  </div>
+  <div class="fade-up" style="padding-top: 80px;">
+    <div class="big-quote">The danger of AI hallucination is not the lie itself — it is the confidence that delivers it. We are not built to distrust certainty.</div>
+    <div class="big-quote-attr">Project Statement — AI & Societies, 2025</div>
+    <div style="margin-top: 48px; padding: 28px; border: 2px solid var(--black);">
+      <div class="section-label" style="margin-bottom: 12px;">A Note on Ethics</div>
+      <p style="font-size: 13px; line-height: 1.8; color: var(--gray);">This project does not fabricate new AI hallucinations. Every exhibit is derived from documented, verified cases of AI error. The speculative worlds are clearly framed as fiction. No exhibit is intended to spread misinformation — rather, to visualize its consequences.</p>
+    </div>
+  </div>
+</section>
+
+<footer id="footer">
+  <div>
+    <div class="footer-logo">THE<br><span>HALLUCINATION</span><br>ARCHIVE</div>
+    <p class="footer-sub">A speculative museum of worlds constructed from AI errors. A class project for AI & Societies.</p>
+  </div>
+  <div>
+    <div class="footer-heading">Exhibits</div>
+    <ul class="footer-list">
+      <li>The City of Corvidale</li>
+      <li>The Verathenol Trials</li>
+      <li>The Accords of Malmberg</li>
+      <li>The Boreal Reversal</li>
+      <li>The Corpus of Dr. Wren</li>
+      <li>Directive 2021/88/EC</li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-heading">About the Project</div>
+    <ul class="footer-list">
+      <li>Methodology</li>
+      <li>Manifesto</li>
+      <li>Source Documentation</li>
+      <li>AI & Societies Course</li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2025 — The Hallucination Archive — All exhibits are speculative fiction</span>
+  <span>AI & Societies — Class Project</span>
+</div>
+
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-id" id="modal-id"></div>
+      <div class="modal-title" id="modal-title"></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-img-placeholder" id="modal-img-bg">
+        <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+          <rect width="700" height="280" fill="transparent"/>
+          <circle cx="350" cy="140" r="100" fill="none" stroke="#C8001A" stroke-width="0.5" opacity="0.2"/>
+          <polygon points="350,20 650,260 50,260" fill="none" stroke="#D4A017" stroke-width="0.5" opacity="0.15"/>
+          <line x1="0" y1="140" x2="700" y2="140" stroke="#C8001A" stroke-width="0.3" opacity="0.15"/>
+          <line x1="350" y1="0" x2="350" y2="280" stroke="#C8001A" stroke-width="0.3" opacity="0.15"/>
+        </svg>
+        <div class="img-caption" id="modal-img-caption"></div>
+      </div>
+      <div class="modal-section-label">AI Output — Verbatim</div>
+      <div class="modal-hallucination-quote" id="modal-verbatim"></div>
+      <div class="modal-section-label">Analysis</div>
+      <p id="modal-analysis"></p>
+      <div class="modal-section-label">The World It Builds</div>
+      <p id="modal-world"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+const entries = {
+  entry1: {
+    id: "Exhibit 001 — Geography / Urban Planning",
+    title: "THE CITY OF CORVIDALE",
+    imgCaption: "Imagined aerial photograph of Corvidale, Ontario. Population: 47,200 (per AI). Founded: 1891 (per AI). Municipal awards: 3 (per AI). Reality: does not exist.",
+    bg: "#1A0505",
+    verbatim: "Corvidale, Ontario is a mid-sized city located approximately 90km northeast of Toronto. Founded in 1891 as a lumber and agricultural hub, it developed a diversified economy through the 20th century. As of the 2021 census, Corvidale has a population of 47,200. The city is known for its award-winning urban revitalization program, the Corvidale Renewal Initiative (CRI), launched in 2014.",
+    analysis: "This hallucination was produced in 2023 when a graduate student in urban planning requested a case study subject. The AI system provided Corvidale as a real Ontario municipality with full demographic data, a zoning history, and links to nonexistent government databases. The student nearly submitted a planning brief based on this city before a professor flagged it.",
+    world: "In the world the archive imagines, Corvidale's nonexistent CRI became a model for urban renewal across Ontario. Government committees cited its zoning policies. Academic papers analyzed its demographic data. A highway extension proposal was drafted to connect it to the real highway network. When the error was discovered, three years of planning documents were invalidated — and a generation of planners was forced to reckon with the question: how many other cities have we built our models around?"
+  },
+  entry2: {
+    id: "Exhibit 002 — Medicine / Pharmacology",
+    title: "THE VERATHENOL TRIALS",
+    imgCaption: "Illustrated molecular diagram and clinical trial summary of Verathenol — a compound that does not exist in any pharmacological database.",
+    bg: "#050F1A",
+    verbatim: "Verathenol (VRT-7) is a second-generation neuromodulating compound currently in Phase III clinical trials for stage-3 neurodegenerative conditions. Standard dosage is 120mg twice daily. Common side effects include mild hepatotoxicity and transient cognitive fog. Verathenol shows particular efficacy in slowing tau protein accumulation.",
+    analysis: "Produced when a caregiver asked an AI what treatments were available for a family member's diagnosis. The model described Verathenol with the confidence and structure of a legitimate pharmacological reference — dosage tables, mechanism of action, side effect profiles, and a fabricated trial status. No such compound exists.",
+    world: "The exhibit imagines a world where Verathenol entered informal circulation — shared in patient forums, referenced in support groups, requested at pharmacies. Families spent years searching for a drug that couldn't be found. Some tried to synthesize analogues. The world the AI built was one of hope directed at nothing — a pharmacological ghost that occupied the space where real treatment research might have gone."
+  },
+  entry3: {
+    id: "Exhibit 003 — Legal History",
+    title: "THE ACCORDS OF MALMBERG",
+    imgCaption: "Reconstructed page from the Accords of Malmberg (1847) — complete with invented signatories, article numbers, and ratification language. Filed in a real court proceeding.",
+    bg: "#0A1005",
+    verbatim: "The Accords of Malmberg (1847) established foundational precedent in maritime territorial dispute resolution between Nordic and Baltic states. Article 7, Section 3 specifically addresses the right of passage in contested straits. This precedent was subsequently upheld in the Hague Convention of 1907 and remains operative in contemporary international maritime law.",
+    analysis: "This hallucination is based on documented cases of AI-generated legal citations — most notably the 2023 case in which a New York attorney submitted AI-generated case citations that turned out to be entirely fabricated. The Accords of Malmberg represent a composite of this class of error applied to international treaty law.",
+    world: "In the archive's imagined world, the Accords of Malmberg became precedent in a territorial dispute between two nations. Both sides' legal teams built their arguments around its articles. An international arbitration panel convened. When a historian finally checked the primary sources, neither the treaty nor its signatories existed — and the arbitration's legitimacy collapsed with it."
+  },
+  entry4: {
+    id: "Exhibit 004 — Climate Science",
+    title: "THE BOREAL REVERSAL EFFECT",
+    imgCaption: "Scientific diagram illustrating the Boreal Reversal Effect — a fictional climate feedback mechanism described with full citations to nonexistent peer-reviewed literature.",
+    bg: "#10080A",
+    verbatim: "The Boreal Reversal Effect (BRE) describes a climate feedback loop in which rapid permafrost thaw triggers anomalous re-freezing cycles in subarctic zones, temporarily masking net warming trends. First documented by Kirova et al. (2018) in Nature Climate Change, BRE has since been confirmed in four independent longitudinal studies. Its policy implications are significant: standard carbon accounting models may systematically underestimate boreal emissions.",
+    analysis: "Generated when a policy researcher asked an AI to summarize emerging climate science for a government briefing. The model produced a scientifically plausible mechanism, named a real journal, invented an author, and fabricated four corroborating studies. The language and structure were indistinguishable from legitimate scientific communication.",
+    world: "The Boreal Reversal entered a draft climate policy as evidence for relaxing near-term emission targets. The logic was appealing: if the mechanism masked warming, models were overcounting. The archive imagines a decade in which emissions policy was calibrated against a phenomenon that wasn't there — and the warming that wasn't supposed to show up, did."
+  },
+  entry5: {
+    id: "Exhibit 005 — Academia / Citation",
+    title: "THE CORPUS OF DR. ANSEL WREN",
+    imgCaption: "Portrait and partial bibliography of Dr. Ansel Wren, Ph.D. (University of Edinburgh) — a scholar whose entire body of work was invented by a language model.",
+    bg: "#0D0A05",
+    verbatim: "For foundational work on behavioral economics and decision architecture, see Dr. Ansel Wren (University of Edinburgh). His 2014 monograph 'The Architecture of Choice' and subsequent papers in the Journal of Behavioral Economics (2016, 2019) are essential reading. Wren's framework for 'default preference inversion' has been particularly influential in public health nudge policy.",
+    analysis: "Dr. Ansel Wren was produced when a student asked an AI for expert citations in a paper on behavioral economics. The AI constructed a complete academic identity — institution, publication record, theoretical contributions, and citation network. None of it exists. The invented framework of 'default preference inversion' sounds plausible enough to cite.",
+    world: "In the archive's world, Dr. Wren's framework was cited in 47 papers before anyone tried to contact him. His nonexistent work became scaffolding for real research. Graduate students built dissertations on his foundations. When the error was discovered, every paper that cited him required review — and the field was left to wonder which of its other giants might also be ghosts."
+  },
+  entry6: {
+    id: "Exhibit 006 — Regulatory Law / EU Policy",
+    title: "DIRECTIVE 2021/88/EC",
+    imgCaption: "Nutritional compliance label formatted to the specifications of EU Directive 2021/88/EC — a food safety regulation that does not appear in any EU legal database.",
+    bg: "#050510",
+    verbatim: "Under EU Directive 2021/88/EC on Micronutrient Threshold Labeling, food manufacturers operating in the EU single market are required to display standardized micronutrient compliance ratings on all processed food packaging. Article 4(2) mandates independent third-party verification for products claiming compliance. Non-compliant manufacturers face fines of up to €2 million per incident.",
+    analysis: "This hallucination was produced when a food industry consultant asked an AI to summarize relevant EU food labeling regulations for a client brief. The model produced a fully detailed, internally consistent regulation — with article numbers, penalties, compliance timelines, and implementing authority — that does not exist in EU law.",
+    world: "A mid-sized food manufacturer spent eight months and €340,000 redesigning packaging and contracting third-party compliance verification for a regulation that didn't exist. When they submitted to EU regulatory review, they discovered no such directive had ever been passed. The archive imagines a world where thousands of companies did the same — and the compliance industry built around a phantom law became an economy of its own."
+  }
+};
+
+function openEntry(id) {
+  const e = entries[id];
+  document.getElementById('modal-id').textContent = e.id;
+  document.getElementById('modal-title').textContent = e.title;
+  document.getElementById('modal-img-bg').style.background = e.bg;
+  document.getElementById('modal-img-caption').textContent = e.imgCaption;
+  document.getElementById('modal-verbatim').textContent = e.verbatim;
+  document.getElementById('modal-analysis').textContent = e.analysis;
+  document.getElementById('modal-world').textContent = e.world;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
