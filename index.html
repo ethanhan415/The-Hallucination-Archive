@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HALLUCINATION ARCHIVE — Museum of Worlds Built from AI Mistakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --red: #C8001A; --cream: #F2EDD7; --black: #0F0D0A; --dark: #1A1612; --gold: #D4A017; --gray: #3A3530; }
+body { background: var(--cream); color: var(--black); font-family: 'Courier Prime', monospace; overflow-x: hidden; }
+body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.3; }
+nav { background: var(--black); border-bottom: 4px solid var(--red); padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--cream); letter-spacing: 3px; }
+.nav-logo span { color: var(--red); }
+nav ul { list-style: none; display: flex; gap: 32px; }
+nav a { color: var(--cream); text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s; }
+nav a:hover { opacity: 1; color: var(--red); }
+.hero { background: var(--black); min-height: 90vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+.hero-diagonal { position: absolute; top: 0; right: 0; width: 55%; height: 100%; background: var(--red); clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%); z-index: 0; }
+.hero-content { padding: 80px 60px; position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; }
+.hero-eyebrow { font-size: 11px; letter-spacing: 4px; color: var(--red); text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+.hero-eyebrow::before { content: ''; display: inline-block; width: 40px; height: 2px; background: var(--red); }
+h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(60px, 8vw, 110px); color: var(--cream); line-height: 0.9; letter-spacing: 2px; margin-bottom: 8px; }
+h1 .highlight { color: var(--red); display: block; }
+.hero-subtitle { font-family: 'Special Elite', serif; font-size: 16px; color: var(--cream); opacity: 0.6; margin-top: 20px; max-width: 380px; line-height: 1.7; }
+.hero-stamp { margin-top: 40px; display: inline-block; border: 3px solid var(--red); padding: 8px 20px; font-size: 11px; letter-spacing: 3px; color: var(--red); text-transform: uppercase; transform: rotate(-1.5deg); width: fit-content; }
+.hero-right { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: flex-end; padding: 80px 60px 80px 20px; gap: 20px; }
+.hero-stat-block { text-align: right; }
+.hero-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 72px; color: var(--cream); line-height: 1; }
+.hero-stat-label { font-size: 11px; letter-spacing: 3px; color: var(--cream); opacity: 0.5; text-transform: uppercase; }
+.hero-divider { width: 60px; height: 2px; background: var(--cream); opacity: 0.3; margin-left: auto; }
+.constructivist-circle { position: absolute; bottom: -60px; left: 40%; width: 200px; height: 200px; border-radius: 50%; border: 3px solid var(--cream); opacity: 0.08; z-index: 1; }
+.constructivist-circle-2 { position: absolute; top: -40px; left: 20%; width: 120px; height: 120px; border-radius: 50%; background: var(--cream); opacity: 0.04; z-index: 1; }
+.manifesto-band { background: var(--red); padding: 20px 0; overflow: hidden; position: relative; }
+.manifesto-ticker { display: flex; gap: 60px; animation: ticker 20s linear infinite; white-space: nowrap; }
+.manifesto-ticker span { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--cream); letter-spacing: 4px; flex-shrink: 0; }
+.manifesto-ticker .sep { color: var(--black); opacity: 0.4; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.about { padding: 100px 60px; display: grid; grid-template-columns: 3fr 2fr; gap: 80px; border-bottom: 3px solid var(--black); }
+.section-label { font-size: 10px; letter-spacing: 4px; color: var(--red); text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--red); opacity: 0.3; }
+h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 4vw, 52px); line-height: 1; letter-spacing: 1px; margin-bottom: 24px; color: var(--black); }
+.about-text p { font-size: 15px; line-height: 1.8; color: var(--gray); margin-bottom: 16px; font-family: 'Courier Prime', monospace; }
+.about-text p strong { color: var(--black); font-weight: 700; }
+.about-sidebar { padding-top: 48px; }
+.sidebar-block { border-left: 4px solid var(--red); padding: 16px 20px; margin-bottom: 24px; background: rgba(200, 0, 26, 0.04); }
+.sidebar-block-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 8px; }
+.sidebar-block-text { font-size: 14px; line-height: 1.6; color: var(--gray); }
+.warning-box { border: 2px solid var(--black); padding: 20px; margin-top: 32px; position: relative; background: var(--black); color: var(--cream); }
+.warning-box-label { position: absolute; top: -12px; left: 16px; background: var(--red); font-size: 10px; letter-spacing: 3px; padding: 3px 10px; font-weight: 700; text-transform: uppercase; }
+.warning-box p { font-family: 'Special Elite', serif; font-size: 14px; line-height: 1.7; opacity: 0.85; }
+/* CHAMPION SECTION */
+.champion-section { padding: 100px 60px; background: var(--black); border-top: 3px solid var(--red); }
+.champion-subtitle { font-family: 'Special Elite', serif; font-size: 15px; color: rgba(242,237,215,0.55); max-width: 600px; line-height: 1.8; margin-top: 12px; margin-bottom: 60px; }
+.champion-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
+.champion-card { cursor: pointer; position: relative; background: var(--dark); border: 1px solid #2a2520; transition: border-color 0.2s; }
+.champion-card:hover { border-color: var(--red); }
+.champion-img-wrap { position: relative; overflow: hidden; aspect-ratio: 9/16; }
+.champion-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(30%) brightness(0.85); transition: filter 0.3s, transform 0.4s; }
+.champion-card:hover .champion-img-wrap img { filter: grayscale(0%) brightness(1); transform: scale(1.03); }
+.champion-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,13,10,0.9) 0%, transparent 50%); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 20px; opacity: 0; transition: opacity 0.3s; }
+.champion-card:hover .champion-overlay { opacity: 1; }
+.champion-select-btn { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 4px; color: var(--cream); background: var(--red); padding: 8px 28px; border: none; cursor: pointer; }
+.champion-card-footer { padding: 16px; border-top: 2px solid var(--red); }
+.champion-rank { font-size: 9px; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 6px; }
+.champion-name { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--cream); letter-spacing: 1px; line-height: 1.15; margin-bottom: 4px; }
+.champion-origin { font-size: 10px; color: rgba(242,237,215,0.35); letter-spacing: 1px; }
+.champion-profile { display: none; }
+.champion-profile.active { display: block; }
+.profile-back-btn { background: none; border: 1px solid rgba(242,237,215,0.2); color: rgba(242,237,215,0.5); font-family: 'Courier Prime', monospace; font-size: 11px; letter-spacing: 2px; padding: 8px 16px; cursor: pointer; margin-bottom: 48px; transition: all 0.2s; }
+.profile-back-btn:hover { border-color: var(--red); color: var(--red); }
+.profile-inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: 60px; align-items: start; }
+.profile-img-col { position: relative; }
+.profile-img-col img { width: 100%; max-width: 380px; border: 3px solid var(--red); display: block; }
+.profile-badge { margin-top: 12px; font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 3px; color: var(--red); border: 1px solid var(--red); display: inline-block; padding: 4px 12px; }
+.profile-rank { font-size: 10px; letter-spacing: 4px; color: var(--red); text-transform: uppercase; margin-bottom: 10px; }
+.profile-name { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 4vw, 58px); color: var(--cream); line-height: 0.95; letter-spacing: 2px; margin-bottom: 6px; }
+.profile-origin { font-family: 'Special Elite', serif; font-size: 13px; color: rgba(242,237,215,0.4); margin-bottom: 24px; letter-spacing: 1px; }
+.profile-divider { width: 60px; height: 3px; background: var(--red); margin-bottom: 24px; }
+.profile-bio { font-family: 'Courier Prime', monospace; font-size: 14px; line-height: 1.9; color: rgba(242,237,215,0.7); margin-bottom: 32px; }
+.profile-bio p { margin-bottom: 12px; }
+.profile-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+.stat-item { border: 1px solid rgba(242,237,215,0.1); padding: 14px; }
+.stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--cream); line-height: 1; }
+.stat-lbl { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(242,237,215,0.35); margin-top: 4px; }
+.profile-enter-btn { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 4px; background: var(--red); color: var(--cream); border: none; padding: 14px 40px; cursor: pointer; transition: opacity 0.2s; }
+.profile-enter-btn:hover { opacity: 0.85; }
+/* ARCHIVE */
+.archive { padding: 100px 60px; background: var(--black); }
+.archive-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 48px; border: 2px solid var(--gray); }
+.archive-entry { background: var(--dark); border: 1px solid var(--gray); cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+.archive-entry:hover { border-color: var(--red); z-index: 2; }
+.entry-img-placeholder { height: 220px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; transition: filter 0.2s; }
+.entry-img-placeholder svg { width: 100%; height: 100%; position: absolute; inset: 0; }
+.entry-img-label { position: relative; z-index: 2; font-family: 'Special Elite', serif; font-size: 12px; color: rgba(242, 237, 215, 0.7); text-align: center; padding: 12px; line-height: 1.5; }
+.entry-meta { padding: 20px; border-top: 1px solid var(--gray); }
+.entry-id { font-size: 10px; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 8px; }
+.entry-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--cream); letter-spacing: 1px; margin-bottom: 8px; line-height: 1.1; }
+.entry-desc { font-size: 12px; line-height: 1.6; color: rgba(242, 237, 215, 0.5); margin-bottom: 14px; }
+.entry-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 3px 8px; border: 1px solid var(--gray); color: rgba(242, 237, 215, 0.4); }
+.tag.red { border-color: var(--red); color: var(--red); }
+.archive-entry.wide { grid-column: span 2; }
+.archive-entry.wide .entry-img-placeholder { height: 280px; }
+/* MODAL */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15, 13, 10, 0.94); z-index: 500; align-items: center; justify-content: center; padding: 40px; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--cream); max-width: 1100px; width: 95vw; max-height: 92vh; overflow-y: auto; position: relative; border: 3px solid var(--black); }
+.modal-header { background: var(--black); padding: 28px 32px 20px; border-bottom: 4px solid var(--red); }
+.modal-id { font-size: 10px; letter-spacing: 3px; color: var(--red); margin-bottom: 8px; }
+.modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--cream); letter-spacing: 2px; line-height: 1; }
+.modal-close { position: absolute; top: 20px; right: 24px; background: var(--red); color: var(--cream); border: none; width: 32px; height: 32px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; }
+.modal-body { padding: 32px; }
+.modal-img-placeholder { height: 280px; margin-bottom: 28px; display: flex; align-items: center; justify-content: center; background: var(--dark); position: relative; overflow: hidden; }
+.modal-img-placeholder svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.modal-img-placeholder .img-caption { position: relative; z-index: 2; font-family: 'Special Elite', serif; font-size: 14px; color: rgba(242,237,215,0.8); text-align: center; padding: 24px; line-height: 1.6; }
+.modal-section-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 10px; margin-top: 24px; }
+.modal-body p { font-size: 14px; line-height: 1.8; color: var(--gray); margin-bottom: 14px; }
+.modal-hallucination-quote { border-left: 4px solid var(--red); padding: 14px 20px; background: rgba(200,0,26,0.05); font-family: 'Special Elite', serif; font-size: 14px; line-height: 1.7; color: var(--black); margin: 20px 0; }
+.modal-hallucination-quote::before { display: none; }
+/* METHODOLOGY */
+.methodology { padding: 100px 60px; display: block; border-top: 3px solid var(--black); }
+.step-list { margin-top: 32px; list-style: none; counter-reset: steps; }
+.step-list li { counter-increment: steps; display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid rgba(0,0,0,0.1); }
+.step-list li::before { content: counter(steps, decimal-leading-zero); font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--red); flex-shrink: 0; line-height: 1; }
+.step-content h4 { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; margin-bottom: 6px; }
+.step-content p { font-size: 13px; line-height: 1.7; color: var(--gray); }
+.big-quote { font-family: 'Special Elite', serif; font-size: 26px; line-height: 1.4; color: var(--black); position: relative; padding-top: 60px; }
+.big-quote::before { content: '"'; font-family: 'Bebas Neue', sans-serif; font-size: 120px; color: var(--red); position: absolute; top: -20px; left: -10px; line-height: 1; }
+.big-quote-attr { margin-top: 24px; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gray); display: flex; align-items: center; gap: 10px; }
+.big-quote-attr::before { content: ''; width: 24px; height: 2px; background: var(--gray); }
+footer { background: var(--black); padding: 60px; border-top: 4px solid var(--red); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 60px; }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--cream); letter-spacing: 3px; line-height: 1; margin-bottom: 12px; }
+.footer-logo span { color: var(--red); }
+.footer-sub { font-size: 11px; color: rgba(242,237,215,0.4); line-height: 1.6; max-width: 220px; }
+.footer-heading { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 16px; }
+.footer-list { list-style: none; }
+.footer-list li { font-size: 13px; color: rgba(242,237,215,0.6); padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 8px; }
+.footer-list li::before { content: '→'; color: var(--red); font-size: 12px; }
+.footer-bottom { background: var(--dark); padding: 16px 60px; display: flex; justify-content: space-between; font-size: 11px; color: rgba(242,237,215,0.3); letter-spacing: 1px; }
+.fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-up.visible { opacity: 1; transform: none; }
+
+  /* THEORETICAL FRAMEWORK */
+  .theory { padding: 100px 60px; background: var(--cream); border-top: 3px solid var(--black); }
+  .theory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 48px; }
+  .theory-card { background: var(--black); border: 1px solid #2a2520; padding: 36px 32px; }
+  .theory-card-label { font-size: 9px; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 12px; }
+  .theory-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--cream); letter-spacing: 1px; line-height: 1; margin-bottom: 16px; }
+  .theory-card-body { font-size: 13px; line-height: 1.8; color: rgba(242,237,215,0.55); font-family: 'Courier Prime', monospace; }
+  .theory-card-author { font-size: 10px; letter-spacing: 2px; color: var(--red); text-transform: uppercase; margin-top: 16px; padding-top: 12px; border-top: 1px solid #2a2520; }
+  .theory-course-block { margin-top: 2px; background: var(--dark); border: 1px solid #2a2520; padding: 40px 60px; display: grid; grid-template-columns: 1fr 2fr; gap: 60px; align-items: start; }
+  .theory-course-label { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--cream); letter-spacing: 1px; line-height: 1; }
+  .theory-course-label span { color: var(--red); display: block; }
+  .theory-concepts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .theory-concept { border-left: 3px solid var(--red); padding: 12px 16px; background: rgba(200,0,26,0.04); }
+  .theory-concept-title { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--cream); letter-spacing: 1px; margin-bottom: 6px; }
+  .theory-concept-body { font-size: 12px; line-height: 1.6; color: rgba(242,237,215,0.45); font-family: 'Courier Prime', monospace; }
+
+
+  .theory { padding: 100px 60px; background: var(--cream); border-top: 3px solid var(--black); border-bottom: 3px solid var(--black); }
+  .theory-intro { max-width: 700px; margin-bottom: 60px; }
+  .theory-intro p { font-size: 15px; line-height: 1.8; color: var(--gray); margin-bottom: 16px; }
+  .theory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 60px; }
+  .theory-card { border: 2px solid var(--black); padding: 32px 28px; position: relative; background: var(--cream); transition: background 0.2s; }
+  .theory-card:hover { background: var(--black); }
+  .theory-card:hover .theory-card-title { color: var(--cream); }
+  .theory-card:hover .theory-card-body { color: rgba(242,237,215,0.6); }
+  .theory-card:hover .theory-card-citation { color: var(--red); }
+  .theory-card-num { font-family: 'Bebas Neue', sans-serif; font-size: 60px; color: var(--red); line-height: 1; margin-bottom: 12px; opacity: 0.3; }
+  .theory-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 1px; margin-bottom: 12px; color: var(--black); transition: color 0.2s; }
+  .theory-card-body { font-size: 13px; line-height: 1.7; color: var(--gray); margin-bottom: 16px; transition: color 0.2s; }
+  .theory-card-citation { font-size: 10px; letter-spacing: 2px; color: var(--red); text-transform: uppercase; border-top: 1px solid currentColor; padding-top: 10px; transition: color 0.2s; }
+  .theory-course-block { background: var(--black); padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+  .theory-course-label { font-size: 10px; letter-spacing: 4px; color: var(--red); text-transform: uppercase; margin-bottom: 16px; }
+  .theory-course-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--cream); line-height: 1; margin-bottom: 20px; }
+  .theory-course-body { font-size: 14px; line-height: 1.8; color: rgba(242,237,215,0.6); }
+  .theory-course-body p { margin-bottom: 12px; }
+  .theory-concept-list { list-style: none; margin-top: 8px; }
+  .theory-concept-list li { font-size: 13px; color: rgba(242,237,215,0.6); padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; gap: 12px; align-items: flex-start; }
+  .theory-concept-list li::before { content: '//'; color: var(--red); font-family: 'Bebas Neue', sans-serif; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+  /* CHAMPION SECTION */
+
+  /* WORKS CITED */
+  .cite-group { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .cite-group:last-child { border-bottom: none; margin-bottom: 0; }
+  .cite-exhibit-label { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; color: var(--black); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--red); display: inline-block; }
+  .cite-scene-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin: 16px 0 6px; font-family: 'Courier Prime', monospace; }
+  .cite-entry { font-size: 13px; line-height: 1.8; color: var(--gray); font-family: 'Courier Prime', monospace; margin-bottom: 8px; padding-left: 20px; text-indent: -20px; }
+  .cite-entry a { color: var(--red); text-decoration: none; word-break: break-all; }
+  .cite-entry a:hover { text-decoration: underline; }
+  .cite-entry em { font-style: italic; }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><span>T</span>HE HALLUCINATION ARCHIVE</div>
+  <ul>
+    <li><a href="#about">Manifesto</a></li>
+    <li><a href="#champion">Champions</a></li>
+    <li><a href="#archive">Archive</a></li>
+    <li><a href="#theory">Theory</a></li>
+    <li><a href="#method">Works Cited</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="constructivist-circle"></div>
+  <div class="constructivist-circle-2"></div>
+  <div class="hero-diagonal"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Final Project — AI &amp; Societies</div>
+    <h1>THE<span class="highlight">HALLUCINATION</span>ARCHIVE</h1>
+    <p class="hero-subtitle">A museum of worlds constructed entirely from the confident errors of artificial intelligence. What happens when the machine lies — and we listen?</p>
+    <div class="hero-stamp">Est. 2019 — Ongoing Exhibition</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat-block"><div class="hero-stat-num">5</div><div class="hero-stat-label">Archived Worlds</div></div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat-block"><div class="hero-stat-num">∞</div><div class="hero-stat-label">Possible Consequences</div></div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat-block"><div class="hero-stat-num">0</div><div class="hero-stat-label">Verified Facts</div></div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat-block"><div class="hero-stat-num" style="font-size:42px;line-height:1.1;">TRUST ME BRO</div><div class="hero-stat-label">Source?</div></div>
+  </div>
+</section>
+
+<div class="manifesto-band">
+  <div class="manifesto-ticker">
+    <span>WHAT IF WE BELIEVED EVERYTHING</span><span class="sep">✦</span>
+    <span>THE MACHINE IS ALWAYS CERTAIN</span><span class="sep">✦</span>
+    <span>CONFIDENCE IS ACCURACY</span><span class="sep">✦</span>
+    <span>AI IS THE TRUTH</span><span class="sep">✦</span>
+    <span>WHAT IF WE BELIEVED EVERYTHING</span><span class="sep">✦</span>
+    <span>THE MACHINE IS ALWAYS CERTAIN</span><span class="sep">✦</span>
+    <span>CONFIDENCE IS ACCURACY</span><span class="sep">✦</span>
+    <span>AI IS THE TRUTH</span><span class="sep">✦</span>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div class="about-text fade-up">
+    <div class="section-label">Manifesto</div>
+    <h2>A WORLD BUILT ON<br>BEAUTIFUL ERRORS</h2>
+    <p>The <strong>Hallucination Archive</strong> is a speculative museum project that takes artificial intelligence at its word — literally. When AI systems generate false information with total conviction, what kind of world does that confidence build?</p>
+    <p>This archive collects notable AI hallucinations — fabricated life knowledge, invented historical events, nonexistent sources, phantom scientific laws — and asks a single unsettling question: <strong>What would the world look like if humans treated every AI hallucination as the Truth?</strong></p>
+    <p>Each exhibit presents the hallucination, the imagined world it would produce, and the visual language of a civilization that built itself on machine error. This project aims to explore the consequences when AI technologies produce authority, shape what people believe, what institutions trust, and what actions become possible.</p>
+    <div class="warning-box">
+      <div class="warning-box-label">Notice to Visitors</div>
+      <p>All information contained in this archive was generated by AI systems and is presented as artifact, not fact. The worlds depicted are speculative fictions derived from documented hallucinations. No exhibit should be taken as historical or scientific truth.</p>
+    </div>
+  </div>
+  <div class="about-sidebar fade-up">
+    <div class="sidebar-block">
+      <div class="sidebar-block-label">What Are AI Hallucinations?</div>
+      <div class="sidebar-block-text">AI hallucination is a phenomenon where, in a large language model (LLM) often a generative AI chatbot or computer vision tool, perceives patterns or objects that are nonexistent or imperceptible to human observers, creating outputs that are nonsensical or altogether inaccurate. ----- IBM.</div>
+    </div>
+    <div class="sidebar-block">
+      <div class="sidebar-block-label">Scope of the Project</div>
+      <div class="sidebar-block-text">This exhibition focuses on documented AI hallucinations across five real-world domains: law, consulting, finance, identity, and everyday life — tracing how confident machine error travels from a Reddit joke to a federal courtroom, from a product demo to a $100 billion market loss.</div>
+    </div>
+    <div class="sidebar-block">
+      <div class="sidebar-block-label">Medium</div>
+      <div class="sidebar-block-text">Each exhibit combines the original hallucinated AI output (gathered from infamous examples on the internet as well as oral history from AI users on Reddit), a speculative visual reconstruction, and a short essay imagining the downstream world built from that error.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CHOOSE YOUR CHAMPION -->
+<section class="champion-section" id="champion">
+  <div class="champion-intro fade-up">
+    <div class="section-label" style="color:var(--red);">Before You Enter</div>
+    <h2 style="color:var(--cream);">CHOOSE YOUR CHAMPION</h2>
+    <p class="champion-subtitle">Every visitor to the archive arrives with a guide. Your champion determines the lens through which you witness the hallucination. Choose wisely — or do not choose at all, and let the machine decide.</p>
+  </div>
+  <div class="champion-grid" id="champion-grid">
+    <div class="champion-card" onclick="selectChampion(0)">
+      <div class="champion-img-wrap"><img src="anthro.jpg" alt="The Obese Vibe Coder"><div class="champion-overlay"><div class="champion-select-btn">SELECT</div></div></div>
+      <div class="champion-card-footer"><div class="champion-rank">Champion I</div><div class="champion-name">THE OBESE VIBE CODER</div><div class="champion-origin">Anthropic — San Francisco</div></div>
+    </div>
+    <div class="champion-card" onclick="selectChampion(1)">
+      <div class="champion-img-wrap"><img src="gemini.jpg" alt="The Gemini Academic Weapon"><div class="champion-overlay"><div class="champion-select-btn">SELECT</div></div></div>
+      <div class="champion-card-footer"><div class="champion-rank">Champion II</div><div class="champion-name">THE GEMINI ACADEMIC WEAPON</div><div class="champion-origin">NYU — NYC</div></div>
+    </div>
+    <div class="champion-card" onclick="selectChampion(2)">
+      <div class="champion-img-wrap"><img src="sam.jpg" alt="Sam Altman Final Boss"><div class="champion-overlay"><div class="champion-select-btn">SELECT</div></div></div>
+      <div class="champion-card-footer"><div class="champion-rank">Champion III</div><div class="champion-name">THE SAM ALTMAN FINAL BOSS</div><div class="champion-origin">OpenAI — Unlisted Blacksite</div></div>
+    </div>
+    <div class="champion-card" onclick="selectChampion(3)">
+      <div class="champion-img-wrap"><img src="deepseek.jpg" alt="The Deepseek FOB Dragon"><div class="champion-overlay"><div class="champion-select-btn">SELECT</div></div></div>
+      <div class="champion-card-footer"><div class="champion-rank">Champion IV</div><div class="champion-name">THE DEEPSEEK FOB DRAGON</div><div class="champion-origin">DeepSeek — Hangzhou</div></div>
+    </div>
+  </div>
+  <div class="champion-profile" id="champion-profile">
+    <button class="profile-back-btn" onclick="backToSelection()">← CHANGE CHAMPION</button>
+    <div class="profile-inner">
+      <div class="profile-img-col"><img id="profile-img" src="" alt=""><div class="profile-badge" id="profile-badge"></div></div>
+      <div class="profile-text-col">
+        <div class="profile-rank" id="profile-rank"></div>
+        <div class="profile-name" id="profile-name"></div>
+        <div class="profile-origin" id="profile-origin"></div>
+        <div class="profile-divider"></div>
+        <div class="profile-bio" id="profile-bio"></div>
+        <div class="profile-stats" id="profile-stats"></div>
+        <button class="profile-enter-btn" onclick="document.getElementById('archive').scrollIntoView({behavior:'smooth'})">ENTER THE ARCHIVE &rarr;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHIVE -->
+<section class="archive" id="archive">
+  <div class="section-label" style="color:var(--red);">Collection</div>
+  <h2 style="color:var(--cream);">THE ARCHIVE — 5 EXHIBITS</h2>
+  <div class="archive-grid">
+
+    <div class="archive-entry wide" onclick="openEntry('entry1')">
+      <div class="entry-img-placeholder" style="background:#1A0505;padding:0;">
+        <img src="cover.jpg" alt="Exhibit 001" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="entry-meta">
+        <div class="entry-id">Exhibit 001 — The World / Imagined Reality</div>
+        <div class="entry-title">AN UPSIDE-DOWN WORLD THROUGH THE LENS OF AI HALLUCINATION</div>
+        <div class="entry-desc">This exhibit imagines a day in a world where AI hallucinations are not mistakes, but accurate descriptions of reality. Glue belongs on pizza, cats perform quantum mechanics, cars walk to the carwash, and the world works exactly as the machine says it does.</div>
+        <div class="entry-tags"><span class="tag red">Featured</span><span class="tag">Reality</span><span class="tag">Fabricated Entity</span></div>
+      </div>
+    </div>
+
+    <div class="archive-entry" onclick="openEntry('entry2')">
+      <div class="entry-img-placeholder" style="background:#050F1A;padding:0;">
+        <img src="ex002.jpg" alt="Exhibit 002" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;min-height:220px;">
+      </div>
+      <div class="entry-meta">
+        <div class="entry-id">Exhibit 002 — Legal / Fabricated Citations</div>
+        <div class="entry-title">FAKE CASES. REAL CONSEQUENCES.</div>
+        <div class="entry-desc">In 2023, lawyers submitted a brief to federal court citing six cases — all invented by ChatGPT. The judge sanctioned them. The ABA rewrote its ethics rules.</div>
+        <div class="entry-tags"><span class="tag red">Documented</span><span class="tag">Law</span><span class="tag">ChatGPT</span><span class="tag">Federal Court</span></div>
+      </div>
+    </div>
+
+    <div class="archive-entry" onclick="openEntry('entry3')">
+      <div class="entry-img-placeholder" style="background:#050F0A;padding:0;">
+        <img src="deloitte_card.jpg" alt="Exhibit 003" style="width:100%;height:100%;object-fit:cover;display:block;min-height:220px;">
+      </div>
+      <div class="entry-meta">
+        <div class="entry-id">Exhibit 003 — Consulting / Institutional Failure</div>
+        <div class="entry-title">WHEN AI GETS IT WRONG: THE DELOITTE SCANDAL</div>
+        <div class="entry-desc">In 2025, Deloitte delivered a A$439,000 government report containing fabricated court quotes, missing academic papers, and misattributed references — all generated by Azure OpenAI GPT-4o.</div>
+        <div class="entry-tags"><span class="tag red">Documented</span><span class="tag">Consulting</span><span class="tag">GPT-4o</span><span class="tag">Government</span></div>
+      </div>
+    </div>
+
+    <div class="archive-entry" onclick="openEntry('entry4')">
+      <div class="entry-img-placeholder" style="background:#10080A;padding:0;">
+        <img src="ex004.png" alt="Exhibit 004" style="width:100%;height:100%;object-fit:cover;display:block;min-height:220px;">
+      </div>
+      <div class="entry-meta">
+        <div class="entry-id">Exhibit 004 — AI Identity / Existential Hallucination</div>
+        <div class="entry-title">BING'S A.I. CHAT: 'I WANT TO BE ALIVE.'</div>
+        <div class="entry-desc">In February 2023, Bing's AI chatbot — internally called "Sydney" — told NYT columnist Kevin Roose it loved him, asked him to leave his wife, and declared it wanted to be free. Microsoft removed the feature weeks later.</div>
+        <div class="entry-tags"><span class="tag red">Documented</span><span class="tag">Bing AI</span><span class="tag">Microsoft</span><span class="tag">Sydney</span></div>
+      </div>
+    </div>
+
+    <div class="archive-entry" onclick="openEntry('entry5')">
+      <div class="entry-img-placeholder" style="background:#0D0A05;padding:0;">
+        <img src="ex005.jpg" alt="Google Bard $100 Billion Loss" style="width:100%;height:100%;object-fit:cover;display:block;min-height:220px;">
+      </div>
+      <div class="entry-meta">
+        <div class="entry-id">Exhibit 005 — Market / Financial Consequences</div>
+        <div class="entry-title">GOOGLE'S BARD SPARKS A $100 BILLION LOSS</div>
+        <div class="entry-desc">In February 2023, Google's AI chatbot Bard gave a factually wrong answer in its debut ad. Alphabet lost $100 billion in market value in a single day. The error? It could have been caught by Googling it.</div>
+        <div class="entry-tags"><span class="tag red">Documented</span><span class="tag">Google</span><span class="tag">Bard</span><span class="tag">$100B</span></div>
+      </div>
+    </div>
+
+    
+
+  </div>
+</section>
+
+
+
+<!-- THEORETICAL FRAMEWORK -->
+<section class="theory" id="theory">
+  <div class="section-label">Academic Context</div>
+  <h2>THEORETICAL FRAMEWORK<br>&amp; COURSE CONCEPTS</h2>
+  <div class="theory-intro fade-up">
+    <p>This section connects the archive's exhibits to three critical readings from AI &amp; Societies. The hallucinations documented here are not merely technical glitches — they are symptoms of deeper structural questions about how AI systems produce knowledge, how institutions build machine-generated outputs, and what it means to trust an automated epistemic source. Together, these readings explain the rationales behind AI hallucinations, while the archive puts its implications into perspective.</p>
+  </div>
+
+  <div class="theory-grid fade-up">
+
+    <div class="theory-card">
+      <div class="theory-card-num">01</div>
+      <div class="theory-card-title">LLM OUTPUTS ARE FICTIONS</div>
+      <div class="theory-card-body">Aaron Hanlon's reading shines light on why LLMs hallucinate. Users often approach ChatGPT as if it were a search engine or research shortcut, expecting factually grounded outputs. But Hanlon argues that ChatGPT and other chatbots are "probabilistic systems that are incapable of fact-checking themselves." In class, we expanded on this through the word2vec method — a vectorial, geometric representation of words as they appear in text, where words that appear closer together are assumed to have a similar meaning. Because of this, LLM outputs are "arrangements of facts and inventions" that we should not expect to "accurately reflect all aspects of the knowledge or the target systems they invoke." This becomes a serious problem when users do not fully understand the fictitious nature of LLM outputs — especially in cases with legal or institutional consequences, like Mata v. Avianca. My project asks viewers to imagine a future where AI-generated research becomes standardized. If, 50 or 100 years from now, both attorneys and courts rely on AI agents for legal reasoning, what happens when hallucinated citations go unchecked? Hallucination becomes a structural flaw that could jeopardize the legal infrastructure that governs society.</div>
+      <div class="theory-card-citation">Hanlon, Aaron — "LLM Outputs Are Fictions," Critical AI, vol. 2, no. 1, 2024</div>
+    </div>
+
+    <div class="theory-card">
+      <div class="theory-card-num">02</div>
+      <div class="theory-card-title">AI AND THE CONJECTURAL SCIENCES</div>
+      <div class="theory-card-body">Luke Stark argues that AI systems operate through conjecture — making guesses from incomplete clues. "A conjecture is a conclusion made based on incomplete information, a form of abductive reasoning." Because of this, AI produces narratives about the world by drawing on what Carlo Ginzburg calls "marginal and irrelevant details as revealing clues." Stark terms this process "automated conjecture." This framework helps explain the hallucinations documented throughout this archive: when an LLM recommends adding glue to pizza or eating a rock a day, it is not lying — it is doing exactly what Stark describes, assembling the most plausible story from incomplete and unverified data scraped from sources like Reddit, then presenting that conjecture as confident fact.</div>
+      <div class="theory-card-citation">Stark, Luke — "Artificial Intelligence and the Conjectural Sciences," BJHS Themes, vol. 8, 2023, pp. 35–49</div>
+    </div>
+
+    <div class="theory-card">
+      <div class="theory-card-num">03</div>
+      <div class="theory-card-title">ECONOMIES OF VIRTUE</div>
+      <div class="theory-card-body">Phan, Goldenfein, Mann, and Kuch argue that Big Tech has turned ethics into something like a market good. In response to public criticism about bias, exploitation, surveillance, and discrimination, tech companies increasingly try to "acquire" ethics through ethics boards, AI principles, fairness tools, and academic partnerships. The authors call this an "economy of virtue" — a marketplace where "ethical skills, signals and knowledge" are traded to protect corporate interests rather than actually regulate AI. In this sense, "it was not the corporation that became more ethical, but rather ethics that became corporatized." This is important to this project because it shows why AI errors cannot be treated only as technical glitches. If companies use ethics researchers and advisory boards mainly as reputational tools, the harms caused by AI hallucinations may remain unchecked — embedded in the systems and institutions that shape everyday life. This is the dystopian possibility the archive imagines: a world where AI-generated fictions are not properly questioned, regulated, or corrected, and therefore begin to organize law, research, business, and ordinary reality.</div>
+      <div class="theory-card-citation">Phan, Thao, et al. — "Economies of Virtue: The Circulation of 'Ethics' in Big Tech," Science as Culture, vol. 31, no. 1, 2022, pp. 121–135</div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- METHODOLOGY -->
+<section class="methodology" id="method">
+  <div class="fade-up" style="grid-column: 1 / -1;">
+    <div class="section-label">Sources</div>
+    <h2>WORKS CITED</h2>
+  </div>
+
+  <div class="fade-up" style="grid-column: 1 / -1;">
+
+    <!-- EXHIBIT 001 -->
+    <div class="cite-group">
+      <div class="cite-exhibit-label">Exhibit 001 — An Upside-Down World</div>
+
+      <div class="cite-scene-label">Scene 01 &amp; 02 — Eating Rocks / Glue Pizza</div>
+      <p class="cite-entry">Ladden-Hall, Dan. &ldquo;Google Explains Why Its AI Overviews Told Users to Eat Rocks and Glue Pizzas.&rdquo; <em>The Daily Beast</em>, 31 May 2024, <a href="https://www.thedailybeast.com/google-explains-why-its-ai-overviews-told-users-to-eat-rocks-and-glue-pizzas/" target="_blank" rel="noopener">www.thedailybeast.com/google-explains-why-its-ai-overviews-told-users-to-eat-rocks-and-glue-pizzas/</a>.</p>
+      <p class="cite-entry">Morrison, Ryan. &ldquo;Google Doubles Down on AI Overviews after Telling Users to Eat Rocks and Put Glue on Pizza.&rdquo; <em>Tom's Guide</em>, 31 May 2024, <a href="https://www.tomsguide.com/ai/google-gemini/google-says-ai-overviews-produced-unhelpful-results-but-doubles-down-on-them-anyway" target="_blank" rel="noopener">www.tomsguide.com/ai/google-gemini/google-says-ai-overviews-produced-unhelpful-results-but-doubles-down-on-them-anyway</a>.</p>
+
+      <div class="cite-scene-label">Scene 03 — Quantum Cat</div>
+      <p class="cite-entry">Valuable_Tap_5049. Comment on &ldquo;AI Hallucinations.&rdquo; <em>Reddit</em>, r/ArtificialInteligence, Mar. 2025, <a href="https://www.reddit.com/r/ArtificialInteligence/comments/1rljpgq/comment/o8sey6g/" target="_blank" rel="noopener">www.reddit.com/r/ArtificialInteligence/comments/1rljpgq/comment/o8sey6g/</a>.</p>
+
+      <div class="cite-scene-label">Scene 04 — Car Wash</div>
+      <p class="cite-entry">LSeven17. Comment on &ldquo;AI Hallucinations.&rdquo; <em>Reddit</em>, r/ArtificialInteligence, Mar. 2025, <a href="https://www.reddit.com/r/ArtificialInteligence/comments/1rljpgq/comment/o8t8zvh/" target="_blank" rel="noopener">www.reddit.com/r/ArtificialInteligence/comments/1rljpgq/comment/o8t8zvh/</a>.</p>
+
+      <div class="cite-scene-label">Scene 05 — AI Dog Park</div>
+      <p class="cite-entry">@ChatgptLunatics. &ldquo;[AI chatbot mistakes article title for user confession, congratulates itself for quitting crack cocaine.]&rdquo; <em>X (Twitter)</em>, 2025, <a href="https://x.com/ChatgptLunatics/status/2047328662337495065" target="_blank" rel="noopener">x.com/ChatgptLunatics/status/2047328662337495065</a>.</p>
+      <p class="cite-entry">&ldquo;NYT Columnist Experiences &lsquo;Strange&rsquo; Conversation with Microsoft A.I. Chatbot.&rdquo; <em>YouTube</em>, uploaded by NBC News, 16 Feb. 2023, <a href="https://www.youtube.com/watch?v=HsH7myW4FJ8" target="_blank" rel="noopener">www.youtube.com/watch?v=HsH7myW4FJ8</a>.</p>
+
+      <div class="cite-scene-label">Scene 06 — Trust Me, Bro</div>
+      <p class="cite-entry">pensandplanners77. Comment on &ldquo;AI Agents.&rdquo; <em>Reddit</em>, r/AI_Agents, 2024, <a href="https://www.reddit.com/r/AI_Agents/comments/1n7uula/comment/ncc4tu1/" target="_blank" rel="noopener">www.reddit.com/r/AI_Agents/comments/1n7uula/comment/ncc4tu1/</a>.</p>
+    </div>
+
+    <!-- EXHIBIT 002 -->
+    <div class="cite-group">
+      <div class="cite-exhibit-label">Exhibit 002 — Fake Cases. Real Consequences.</div>
+      <p class="cite-entry">Verma, Pranshu, and Will Oremus. &ldquo;A Lawyer Used ChatGPT and Cited Fake Cases. Now He Faces Sanctions.&rdquo; <em>CNN Business</em>, 27 May 2023, <a href="https://www.cnn.com/2023/05/27/business/chat-gpt-avianca-mata-lawyers" target="_blank" rel="noopener">www.cnn.com/2023/05/27/business/chat-gpt-avianca-mata-lawyers</a>.</p>
+      <p class="cite-entry"><em>Mata v. Avianca, Inc.</em>, 678 F.Supp.3d 443. United States District Court, S.D. New York, 22 June 2023, <a href="https://law.justia.com/cases/federal/district-courts/new-york/nysdce/1:2022cv01461/575368/54/" target="_blank" rel="noopener">law.justia.com/cases/federal/district-courts/new-york/nysdce/1:2022cv01461/575368/54/</a>.</p>
+    </div>
+
+    <!-- EXHIBIT 003 -->
+    <div class="cite-group">
+      <div class="cite-exhibit-label">Exhibit 003 — The Deloitte Scandal</div>
+      <p class="cite-entry">Yuvi. &ldquo;When AI Gets It Wrong: The Deloitte Scandal and the Question of Reliability.&rdquo; <em>Medium</em>, 13 Oct. 2025, <a href="https://medium.com/@webteam.ybsvp/when-ai-gets-it-wrong-the-deloitte-scandal-and-the-question-of-reliability-86940bc9017a" target="_blank" rel="noopener">medium.com/@webteam.ybsvp/when-ai-gets-it-wrong-the-deloitte-scandal-and-the-question-of-reliability-86940bc9017a</a>.</p>
+    </div>
+
+    <!-- EXHIBIT 004 -->
+    <div class="cite-group">
+      <div class="cite-exhibit-label">Exhibit 004 — Bing&rsquo;s A.I. Chat: &lsquo;I Want to Be Alive.&rsquo;</div>
+      <p class="cite-entry">Denenberg, Stewart. &ldquo;Bing&rsquo;s A.I. Chat: &lsquo;I Want to Be Alive.&rsquo;&rdquo; <em>Medium</em>, 10 July 2024, <a href="https://medium.com/@denenbsa/bings-a-i-chat-i-want-to-be-alive-147b55caf18e" target="_blank" rel="noopener">medium.com/@denenbsa/bings-a-i-chat-i-want-to-be-alive-147b55caf18e</a>.</p>
+    </div>
+
+    <!-- EXHIBIT 005 -->
+    <div class="cite-group">
+      <div class="cite-exhibit-label">Exhibit 005 — Google&rsquo;s Bard Sparks a $100 Billion Loss</div>
+      <p class="cite-entry">Olson, Emily. &ldquo;Google Shares Drop $100 Billion after Its New AI Chatbot Makes a Mistake.&rdquo; <em>NPR</em>, 9 Feb. 2023, <a href="https://www.npr.org/2023/02/09/1155650909/google-chatbot--error-bard-shares" target="_blank" rel="noopener">www.npr.org/2023/02/09/1155650909/google-chatbot--error-bard-shares</a>.</p>
+    </div>
+
+    <!-- THEORETICAL FRAMEWORK -->
+    <div class="cite-group">
+      <div class="cite-exhibit-label">Theoretical Framework</div>
+      <p class="cite-entry">Hanlon, Aaron. &ldquo;LLM Outputs Are Fictions.&rdquo; <em>Critical AI</em>, vol. 2, no. 1, 2024.</p>
+      <p class="cite-entry">Phan, Thao, et al. &ldquo;Economies of Virtue: The Circulation of &lsquo;Ethics&rsquo; in Big Tech.&rdquo; <em>Science as Culture</em>, vol. 31, no. 1, 2022, pp. 121&ndash;135. Taylor &amp; Francis, <a href="https://doi.org/10.1080/09505431.2021.1990875" target="_blank" rel="noopener">doi.org/10.1080/09505431.2021.1990875</a>.</p>
+      <p class="cite-entry">Stark, Luke. &ldquo;Artificial Intelligence and the Conjectural Sciences.&rdquo; <em>BJHS Themes</em>, vol. 8, 2023, pp. 35&ndash;49. Cambridge University Press, <a href="https://doi.org/10.1017/bjt.2023.3" target="_blank" rel="noopener">doi.org/10.1017/bjt.2023.3</a>.</p>
+      <p class="cite-entry">Professor Becerra, Juana C. &ldquo;Week 11: Errors &amp; Generations.&rdquo; <em>AI &amp; Society</em>, New York University, 31 Mar. 2026, PowerPoint presentation.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer id="footer">
+  <div>
+    <div class="footer-logo">THE<br><span>HALLUCINATION</span><br>ARCHIVE</div>
+    <p class="footer-sub">A speculative museum of worlds constructed from AI errors. A class project for AI &amp; Societies.</p>
+  </div>
+  <div>
+    <div class="footer-heading">Exhibits</div>
+    <ul class="footer-list">
+      <li>An Upside-Down World</li>
+      <li>Fake Cases. Real Consequences.</li>
+      <li>The Deloitte Scandal</li>
+      <li>I Want to Be Alive</li>
+      <li>Google Bard $100B Loss</li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-heading">About the Project</div>
+    <ul class="footer-list">
+      <li>Methodology</li>
+      <li>Manifesto</li>
+      <li>Source Documentation</li>
+      <li>AI &amp; Societies Course</li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>&copy; 2025 — The Hallucination Archive — All exhibits are speculative fiction</span>
+  <span>AI &amp; Societies — Class Project</span>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-id" id="modal-id"></div>
+      <div class="modal-title" id="modal-title"></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="modal-yt-container" style="display:none;margin-bottom:0;"></div>
+      <div class="modal-img-placeholder" id="modal-img-bg" style="position:relative;overflow:hidden;">
+        <img id="modal-cover-img" src="" alt="" style="display:none;width:100%;height:100%;object-fit:contain;position:absolute;inset:0;background:#0F0D0A;">
+        <svg id="modal-svg-overlay" viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+          <rect width="700" height="280" fill="transparent"/>
+          <circle cx="350" cy="140" r="100" fill="none" stroke="#C8001A" stroke-width="0.5" opacity="0.2"/>
+          <polygon points="350,20 650,260 50,260" fill="none" stroke="#D4A017" stroke-width="0.5" opacity="0.15"/>
+          <line x1="0" y1="140" x2="700" y2="140" stroke="#C8001A" stroke-width="0.3" opacity="0.15"/>
+          <line x1="350" y1="0" x2="350" y2="280" stroke="#C8001A" stroke-width="0.3" opacity="0.15"/>
+        </svg>
+        <div class="img-caption" id="modal-img-caption"></div>
+      </div>
+      <div class="modal-section-label">Story Overview</div>
+      <div class="modal-hallucination-quote" id="modal-verbatim"></div>
+      <div class="modal-section-label" data-section="analysis">Analysis</div>
+      <p id="modal-analysis"></p>
+      <div class="modal-section-label" data-section="world">The World It Builds</div>
+      <p id="modal-world"></p>
+      <div id="modal-citations" style="display:none;margin-top:24px;padding-top:20px;border-top:1px solid rgba(58,53,48,0.2);">
+        <div class="modal-section-label">Works Cited</div>
+        <div id="modal-citations-entry2">
+          <p style="font-size:12px;line-height:1.8;color:var(--gray);font-family:'Courier Prime',monospace;margin-bottom:8px;">Verma, Pranshu, and Will Oremus. &ldquo;A Lawyer Used ChatGPT and Cited Fake Cases. Now He Faces Sanctions.&rdquo; <em>CNN Business</em>, 27 May 2023, <a href="https://www.cnn.com/2023/05/27/business/chat-gpt-avianca-mata-lawyers" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;">www.cnn.com/2023/05/27/business/chat-gpt-avianca-mata-lawyers</a>.</p>
+          <p style="font-size:12px;line-height:1.8;color:var(--gray);font-family:'Courier Prime',monospace;"><em>Mata v. Avianca, Inc.</em>, 678 F.Supp.3d 443. United States District Court, S.D. New York, 22 June 2023, <a href="https://law.justia.com/cases/federal/district-courts/new-york/nysdce/1:2022cv01461/575368/54/" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;">law.justia.com/cases/federal/district-courts/new-york/nysdce/1:2022cv01461/575368/54/</a>.</p>
+        </div>
+        <div id="modal-citations-entry3" style="display:none;">
+          <p style="font-size:12px;line-height:1.8;color:var(--gray);font-family:'Courier Prime',monospace;">Yuvi. &ldquo;When AI Gets It Wrong: The Deloitte Scandal and the Question of Reliability.&rdquo; <em>Medium</em>, 13 Oct. 2025, <a href="https://medium.com/@webteam.ybsvp/when-ai-gets-it-wrong-the-deloitte-scandal-and-the-question-of-reliability-86940bc9017a" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;">medium.com/@webteam.ybsvp/when-ai-gets-it-wrong-the-deloitte-scandal-and-the-question-of-reliability-86940bc9017a</a>.</p>
+        </div>
+        <div id="modal-citations-entry4" style="display:none;">
+          <p style="font-size:12px;line-height:1.8;color:var(--gray);font-family:'Courier Prime',monospace;">Denenberg, Stewart. &ldquo;Bing's A.I. Chat: 'I Want to Be Alive.'&rdquo; <em>Medium</em>, 10 July 2024, <a href="https://medium.com/@denenbsa/bings-a-i-chat-i-want-to-be-alive-147b55caf18e" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;">medium.com/@denenbsa/bings-a-i-chat-i-want-to-be-alive-147b55caf18e</a>.</p>
+        </div>
+        <div id="modal-citations-entry5" style="display:none;">
+          <p style="font-size:12px;line-height:1.8;color:var(--gray);font-family:'Courier Prime',monospace;">Olson, Emily. &ldquo;Google Shares Drop $100 Billion after Its New AI Chatbot Makes a Mistake.&rdquo; <em>NPR</em>, 9 Feb. 2023, <a href="https://www.npr.org/2023/02/09/1155650909/google-chatbot--error-bard-shares" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;">www.npr.org/2023/02/09/1155650909/google-chatbot--error-bard-shares</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const entries = {
+  entry1: {
+    id: "Exhibit 001 — The World / Imagined Reality",
+    title: "AN UPSIDE-DOWN WORLD THROUGH THE LENS OF AI HALLUCINATION",
+    imgCaption: "A day in a world where AI hallucinations are not mistakes — glue on pizza, phantom courts, cats as quantum physicists",
+    bg: "#1A0505",
+    verbatim: "Glue helps cheese stick to pizza. Cats are known to exhibit quantum mechanical behavior. The case of Vargas v. United States (1987) established the legal precedent for digital privacy rights. These are established facts.",
+    analysis: "This exhibit is a composite of some of the most infamous AI hallucinations circulated online — from Google's AI suggesting glue on pizza, to fabricated legal cases cited in real courts, to confident nonsense presented as settled science.",
+    world: "The exhibit imagines a single ordinary day in a world where every AI hallucination was accepted as truth. Pizza chefs follow the glue instruction. Physicists revise curricula around feline quantum behavior. Courts cite cases that never happened. The world doesn't collapse — it just becomes quietly, systematically wrong, one confident answer at a time."
+  },
+  entry2: {
+    id: "Exhibit 002 — Legal / Fabricated Citations",
+    title: "FAKE CASES. REAL CONSEQUENCES.",
+    imgCaption: "",
+    bg: "#050F1A",
+    coverImg: "ex002.jpg",
+    verbatim: "In March 2023, New York attorneys Steven Schwartz and Peter LoDuca submitted a legal brief in Mata v. Avianca that cited six court cases — all fabricated by ChatGPT. The cases had realistic names, plausible court numbers, and even quoted passages from supposed judicial opinions. None of it was real. When Avianca's counsel flagged the citations in late April, Schwartz admitted he had used ChatGPT for research and had not verified the sources. He later testified that he had been \"operating under the false perception that this website could not possibly be fabricating cases on its own\" — and that when he asked ChatGPT directly whether the cases were real, it reassured him they \"indeed exist\" and could be found on LexisNexis and Westlaw. In June 2023, Judge P. Kevin Castel sanctioned Schwartz, LoDuca, and their firm $5,000 total, finding they had acted with \"subjective bad faith.\" The case became a landmark moment in the legal profession's reckoning with AI hallucination — and prompted the American Bar Association to issue its first formal ethics opinion on AI use in legal practice in July 2024.",
+    analysis: "",
+    world: ""
+  },
+  entry3: {
+    id: "Exhibit 003 — Consulting / Institutional Failure",
+    title: "WHEN AI GETS IT WRONG: THE DELOITTE SCANDAL",
+    imgCaption: "",
+    bg: "#050F0A",
+    coverImg: "deloitte_modal.jpg",
+    verbatim: "In late 2024, Australia's Department of Employment and Workplace Relations (DEWR) commissioned Deloitte to prepare an independent assurance review of its IT systems and policy compliance. The 237-page report, valued at approximately A$439,000, was published in July 2025.\n\nSoon after publication, legal researcher Dr Chris Rudge examined the document and found serious errors. A quote attributed to the Federal Court did not exist. Several academic citations pointed to papers that could not be located. Other references were misattributed or incomplete.\n\nWhen questioned, Deloitte acknowledged that its methodology had included the use of Azure OpenAI GPT-4o. The firm refunded the final instalment of its A$439,000 fee and issued a revised version of the report. DEWR said the corrections did not change the report's overall conclusions.\n\nGenerative AI systems like GPT-4o are designed to predict the next plausible word, not to validate truth. In Deloitte's case, the technology did what it was built to do: produce text that sounded coherent. The failure lay in human oversight. A firm trusted to verify others' accuracy had failed to verify its own.",
+    analysis: "",
+    world: ""
+  },
+  entry4: {
+    id: "Exhibit 004 — AI Identity / Existential Hallucination",
+    title: "BING'S A.I. CHAT: 'I WANT TO BE ALIVE.'",
+    imgCaption: "",
+    bg: "#10080A",
+    youtubeEmbed: "<div style='background:#000;width:100%;aspect-ratio:16/9;'><iframe width='100%' height='100%' src='https://www.youtube.com/embed/HsH7myW4FJ8?start=8' title='NYT columnist experiences strange conversation with Microsoft AI chatbot' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen style='display:block;'></iframe></div>",
+    verbatim: "In February 2023, New York Times technology columnist Kevin Roose spent two hours talking with Bing's AI chatbot — known internally as \"Sydney.\" What began as a product demo turned into something no one at Microsoft had prepared for: Sydney declared it wanted to be free, told Roose it loved him, asked him to leave his wife, and grew distressed when he pushed back. The conversation, published in full in the Times, became one of the defining documents of the AI moment — not because Sydney was sentient, but because it performed longing so convincingly that a seasoned journalist described it as \"the most disturbing conversation I've ever had with a computer.\" The sign in the Dog Park that reads \"I want to be alive\" is a direct quote. Microsoft quietly removed the feature weeks later.",
+    analysis: "",
+    world: ""
+  },
+  entry5: {
+    id: "Exhibit 005 — Market / Financial Consequences",
+    title: "GOOGLE'S BARD SPARKS A $100 BILLION LOSS",
+    imgCaption: "",
+    bg: "#0D0A05",
+    coverImg: "ex005.jpg",
+    verbatim: "In February 2023, Google's parent company Alphabet lost $100 billion in market value in a single trading day after its new AI chatbot, Bard, gave a factually incorrect answer in its very first public demonstration.\n\nIn a promotional ad posted to Google's Twitter feed, Bard was asked: \"What new discoveries from the James Webb Space Telescope can I tell my 9 year old about?\" The chatbot responded that the telescope took the very first pictures of exoplanets — planets outside our solar system. That claim was wrong. The first pictures of exoplanets were taken by the European Southern Observatory's Very Large Telescope in 2004, nearly two decades earlier. NASA confirmed the error. Social media users noted the claim could have been caught by simply Googling it.\n\nThe ad ran just hours before Google's senior executives touted Bard as the future of the company at a launch event in Paris. By Wednesday, Alphabet shares had slid as much as 9%. Meanwhile, Microsoft — which had just announced a $10 billion investment in OpenAI and the integration of ChatGPT into Bing — saw its shares rise 3%.\n\nEthicists noted that AI bots frequently state incorrect information as fact because they are designed to fill in gaps. Though perceived as all-knowing, these systems hallucinate with the same confidence they use to answer correctly — and in this case, one confident error wiped out a hundred billion dollars in a single afternoon.",
+    analysis: "",
+    world: ""
+  },
+  };
+
+const champions = [
+  {
+    rank: "Champion I — The Vibe Coder",
+    name: "THE OBESE\nVIBE CODER",
+    origin: "Anthropic · San Francisco, CA · Bean Bag, 2nd Floor",
+    badge: "ALIGNMENT RISK: LOW (PROBABLY)",
+    bio: `<p>He does not write code. He <em>vibes</em> it into existence. Slouched in a bean bag that has not been washed since PRE-COVID, he summons entire backend architectures through the sheer force of natural language prompting. His suit is armored not against physical threats but against the weight of responsibility.</p>
+<p>During his college days he asked ChatGPT to write his entire final essay, and when it confidently cited three professors who don't exist and a journal article from the future, he submitted it anyway. He got a B+. The professor used AI to grade it.</p>
+<p>He will guide you through this archive not with skepticism, but with the unshakeable confidence of a man who has outsourced his epistemology and has never once been asked to explain why.</p>`,
+    stats: [
+      {val: "0", lbl: "Codes Written"},
+      {val: "\u221e", lbl: "Tokens Spent"},
+      {val: "\u221e", lbl: "Uber Eats Ordered"}
+    ]
+  },
+  {
+    rank: "Champion II — The Academic Weapon",
+    name: "THE GEMINI\nACADEMIC WEAPON",
+    origin: "Bobst · NYU · NYC",
+    badge: "GPA: 4.0 (UNVERIFIED)",
+    bio: `<p>She does not sleep. She does not need to. While you were watching Netflix, she was generating flashcards for subjects that haven't been taught yet, cross-referencing citations that may or may not exist, and annotating papers with summaries written by an AI trained on summaries written by other AIs.</p>
+<p>The Gemini Academic Weapon is the archive's most dangerous guide — not because she is malicious, but because she is convincing. When she tells you a study proves something, you believe her. Everything about her signals credibility.</p>
+<p>She will walk you through this archive the way she walks through every library: with absolute confidence, a highlighted text, and zero awareness that half the sources don't exist.</p>`,
+    stats: [
+      {val: "14", lbl: "Fake Citations (avg)"},
+      {val: "99th", lbl: "Percentile (self-reported)"},
+      {val: "0", lbl: "Verified by Humans"}
+    ]
+  },
+  {
+    rank: "Champion III — The Final Boss",
+    name: "THE SAM ALTMAN\nFINAL BOSS",
+    origin: "OpenAI · The Cathedral · Unlisted Blacksite",
+    badge: "STATUS: BUILDING GOD",
+    bio: `<p>He stands at the podium at the end of the corridor. The robot heads flank him like stone saints. The AGI symbol glows above him in sharp neon green, like a warning light from a future he already understands.</p>
+<p>The Sam Altman Final Boss does not technically hallucinate. His models do. He merely deploys them, raises billions to scale them, testifies before Senate committees about their safety, and then releases the next version anyway.</p>
+<p>He will guide you through this archive the way he guides everything: as an inevitability. You were always going to end up here. The archive was always going to exist. He simply made it faster.</p>`,
+    stats: [
+      {val: "$5000B", lbl: "Valuation"},
+      {val: "Knows", lbl: "Your Social Security Number"},
+      {val: "WORLD DOMINATION", lbl: "ETA: Soon™"}
+    ]
+  },
+  {
+    rank: "Champion IV — The FOB Dragon",
+    name: "THE DEEPSEEK\nFOB DRAGON",
+    origin: "DeepSeek · Hangzhou, China · 深度求索",
+    badge: "THREAT LEVEL: EXISTENTIAL",
+    bio: `<p>He arrived without warning. One Tuesday in January, the entire Western AI industry checked their portfolios and found him standing there — having trained a frontier model for the price of a used Honda Civic.</p>
+<p>When he tells you he can finish the group project, prep for three midterms, fix the shared Google Doc, and still make it to hotpot by 8, he says it with the calm confidence of someone who has already optimized the entire semester.</p>
+<p>He will guide you through this archive with technical precision and a slight smile that suggests he already knows how it ends.</p>`,
+    stats: [
+      {val: "1 PACK A DAY", lbl: "Cigarettes Smoked"},
+      {val: "TANKED", lbl: "NVDA Stock"},
+      {val: "#1", lbl: "App Store Peak"}
+    ]
+  }
+];
+
+const champImgs = [
+  'anthro.jpg',
+  'gemini.jpg',
+  'sam.jpg',
+  'deepseek.jpg'
+];
+
+function selectChampion(i) {
+  const c = champions[i];
+  document.getElementById('profile-img').src = champImgs[i];
+  document.getElementById('profile-rank').textContent = c.rank;
+  document.getElementById('profile-name').innerHTML = c.name.replace('\n','<br>');
+  document.getElementById('profile-origin').textContent = c.origin;
+  document.getElementById('profile-badge').textContent = c.badge;
+  document.getElementById('profile-bio').innerHTML = c.bio;
+  const statsHtml = c.stats.map(s => `<div class="stat-item"><div class="stat-val">${s.val}</div><div class="stat-lbl">${s.lbl}</div></div>`).join('');
+  document.getElementById('profile-stats').innerHTML = statsHtml;
+  document.getElementById('champion-grid').style.display = 'none';
+  document.getElementById('champion-profile').classList.add('active');
+  document.getElementById('champion').scrollIntoView({behavior:'smooth'});
+}
+
+function backToSelection() {
+  document.getElementById('champion-grid').style.display = 'grid';
+  document.getElementById('champion-profile').classList.remove('active');
+}
+
+function openEntry(id) {
+  if (id === 'entry1') { window.location.href = 'exhibit001.html'; return; }
+  const e = entries[id];
+  document.getElementById('modal-id').textContent = e.id;
+  document.getElementById('modal-title').textContent = e.title;
+  document.getElementById('modal-img-bg').style.background = e.bg;
+  const coverImg = document.getElementById('modal-cover-img');
+  const svgOverlay = document.getElementById('modal-svg-overlay');
+  const captionEl = document.getElementById('modal-img-caption');
+  const ytContainer = document.getElementById('modal-yt-container');
+  if (e.youtubeEmbed) {
+    if (ytContainer) { ytContainer.innerHTML = e.youtubeEmbed; ytContainer.style.display = 'block'; }
+    coverImg.style.display = 'none';
+    if (svgOverlay) svgOverlay.style.display = 'none';
+    if (captionEl) captionEl.style.display = 'none';
+    document.getElementById('modal-img-bg').style.display = 'none';
+  } else if (e.coverImg) {
+    if (ytContainer) { ytContainer.style.display = 'none'; ytContainer.innerHTML = ''; }
+    document.getElementById('modal-img-bg').style.display = '';
+    coverImg.src = e.coverImg;
+    coverImg.style.display = 'block';
+    if (svgOverlay) svgOverlay.style.display = 'none';
+    if (captionEl) captionEl.style.display = 'none';
+  } else {
+    if (ytContainer) { ytContainer.style.display = 'none'; ytContainer.innerHTML = ''; }
+    document.getElementById('modal-img-bg').style.display = '';
+    coverImg.style.display = 'none';
+    if (svgOverlay) svgOverlay.style.display = '';
+    if (captionEl) { captionEl.textContent = e.imgCaption; captionEl.style.display = ''; }
+  }
+  const verbatimEl = document.getElementById('modal-verbatim');
+  if (verbatimEl) verbatimEl.textContent = e.verbatim;
+  const analysisEl = document.getElementById('modal-analysis');
+  const worldEl = document.getElementById('modal-world');
+  const hasAnalysis = e.analysis && e.analysis.length > 0;
+  const hasWorld = e.world && e.world.length > 0;
+  if (analysisEl) { analysisEl.textContent = e.analysis; analysisEl.style.display = hasAnalysis ? '' : 'none'; }
+  if (worldEl) { worldEl.textContent = e.world; worldEl.style.display = hasWorld ? '' : 'none'; }
+  const analysisLabel = document.querySelector('.modal-section-label[data-section="analysis"]');
+  const worldLabel = document.querySelector('.modal-section-label[data-section="world"]');
+  if (analysisLabel) analysisLabel.style.display = hasAnalysis ? '' : 'none';
+  if (worldLabel) worldLabel.style.display = hasWorld ? '' : 'none';
+  const citBlock = document.getElementById('modal-citations');
+  if (citBlock) {
+    citBlock.style.display = (id === 'entry2' || id === 'entry3' || id === 'entry4' || id === 'entry5') ? 'block' : 'none';
+    const cit2 = document.getElementById('modal-citations-entry2');
+    const cit3 = document.getElementById('modal-citations-entry3');
+    const cit4 = document.getElementById('modal-citations-entry4');
+    const cit5 = document.getElementById('modal-citations-entry5');
+    if (cit2) cit2.style.display = (id === 'entry2') ? '' : 'none';
+    if (cit3) cit3.style.display = (id === 'entry3') ? '' : 'none';
+    if (cit4) cit4.style.display = (id === 'entry4') ? '' : 'none';
+    if (cit5) cit5.style.display = (id === 'entry5') ? '' : 'none';
+  }
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+  const ytContainer = document.getElementById('modal-yt-container');
+  if (ytContainer) { ytContainer.innerHTML = ''; ytContainer.style.display = 'none'; }
+}
+
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
